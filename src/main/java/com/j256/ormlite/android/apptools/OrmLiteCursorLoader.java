@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.database.Cursor;
+import net.sqlcipher.Cursor;
 
 import com.j256.ormlite.android.AndroidCompiledStatement;
 import com.j256.ormlite.dao.Dao;

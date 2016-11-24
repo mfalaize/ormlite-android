@@ -2,8 +2,8 @@ package com.j256.ormlite.android;
 
 import java.sql.SQLException;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.db.DatabaseType;
@@ -65,8 +65,16 @@ public class AndroidConnectionSource extends BaseConnectionSource implements Con
 			SQLiteDatabase db;
 			if (sqliteDatabase == null) {
 				try {
-					db = helper.getWritableDatabase();
-				} catch (android.database.SQLException e) {
+					String password;
+					if (helper instanceof OrmLiteSqliteOpenHelper) {
+						OrmLiteSqliteOpenHelper openHelper = (OrmLiteSqliteOpenHelper) helper;
+						password = openHelper.getPassword();
+					} else {
+						throw new IllegalStateException("SQLiteOpenHelper must be an instance of OrmLiteSqliteOpenHelper");
+					}
+
+					db = helper.getWritableDatabase(password);
+				} catch (net.sqlcipher.SQLException e) {
 					throw SqlExceptionUtil.create("Getting a writable database from helper " + helper + " failed", e);
 				}
 			} else {

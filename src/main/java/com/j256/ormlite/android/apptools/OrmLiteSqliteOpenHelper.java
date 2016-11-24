@@ -9,9 +9,9 @@ import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.database.sqlite.SQLiteOpenHelper;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabase.CursorFactory;
+import net.sqlcipher.database.SQLiteOpenHelper;
 
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.android.AndroidDatabaseConnection;
@@ -38,6 +38,8 @@ public abstract class OrmLiteSqliteOpenHelper extends SQLiteOpenHelper {
 
 	protected boolean cancelQueriesEnabled;
 	private volatile boolean isOpen = true;
+
+	private String password;
 
 	/**
 	 * @param context
@@ -322,5 +324,13 @@ public abstract class OrmLiteSqliteOpenHelper extends SQLiteOpenHelper {
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException("Could not open config file " + configFile, e);
 		}
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

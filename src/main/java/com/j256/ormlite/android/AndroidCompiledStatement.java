@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
+import net.sqlcipher.Cursor;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteStatement;
 
 import com.j256.ormlite.android.compat.ApiCompatibility;
 import com.j256.ormlite.android.compat.ApiCompatibility.CancellationHook;
@@ -99,7 +99,7 @@ public class AndroidCompiledStatement implements CompiledStatement {
 		if (cursor != null && !cursor.isClosed()) {
 			try {
 				cursor.close();
-			} catch (android.database.SQLException e) {
+			} catch (net.sqlcipher.SQLException e) {
 				throw new IOException("Problems closing Android cursor", e);
 			}
 		}
@@ -193,7 +193,7 @@ public class AndroidCompiledStatement implements CompiledStatement {
 				cursor = apiCompatibility.rawQuery(db, finalSql, getStringArray(), cancellationHook);
 				cursor.moveToFirst();
 				logger.trace("{}: started rawQuery cursor for: {}", this, finalSql);
-			} catch (android.database.SQLException e) {
+			} catch (net.sqlcipher.SQLException e) {
 				throw SqlExceptionUtil.create("Problems executing Android query: " + finalSql, e);
 			}
 		}
@@ -212,7 +212,7 @@ public class AndroidCompiledStatement implements CompiledStatement {
 	static int execSql(SQLiteDatabase db, String label, String finalSql, Object[] argArray) throws SQLException {
 		try {
 			db.execSQL(finalSql, argArray);
-		} catch (android.database.SQLException e) {
+		} catch (net.sqlcipher.SQLException e) {
 			throw SqlExceptionUtil.create("Problems executing " + label + " Android statement: " + finalSql, e);
 		}
 		int result;
@@ -221,7 +221,7 @@ public class AndroidCompiledStatement implements CompiledStatement {
 			// ask sqlite how many rows were just changed
 			stmt = db.compileStatement("SELECT CHANGES()");
 			result = (int) stmt.simpleQueryForLong();
-		} catch (android.database.SQLException e) {
+		} catch (net.sqlcipher.SQLException e) {
 			// ignore the exception and just return 1 if it failed
 			result = 1;
 		} finally {

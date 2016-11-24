@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<!-- ormlite configuration file for Maven (http://maven.apache.org/) -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.j256.ormlite</groupId>
-	<artifactId>ormlite-android</artifactId>
+	<groupId>fr.mfalaize.ormlite</groupId>
+	<artifactId>ormlite-android-sqlcipher</artifactId>
 	<version>5.0</version>
-	<packaging>jar</packaging>
+	<packaging>aar</packaging>
 	<name>ORMLite Android</name>
 	<url>http://ormlite.sourceforge.net/</url>
 	<description>Lightweight Object Relational Model (ORM) Android classes</description>
@@ -127,6 +127,13 @@
 			</testResource>
 		</testResources>
 		<plugins>
+			<plugin>
+				<groupId>com.simpligility.maven.plugins</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<version>4.3.0</version>
+				<extensions>true</extensions>
+			</plugin>
+
 			<!-- copied from the sonatype stuff so we can override the params -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -314,6 +321,12 @@
 			<groupId>com.j256.ormlite</groupId>
 			<artifactId>ormlite-core</artifactId>
 			<version>${ormlite-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.zetetic</groupId>
+			<artifactId>android-database-sqlcipher</artifactId>
+			<version>3.5.4</version>
+			<type>aar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.google.android</groupId>
